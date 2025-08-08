@@ -2,8 +2,5 @@
 
 namespace Domain.Records.Requests
 {
-	public class TabloideRequest
-	{
-		public IFormFile Tabloide { get; set; } = null!;
-    }
+	public record TabloideRequest(string MarketName, IFormFile Tabloide);
 }

@@ -15,9 +15,15 @@ namespace WebApi.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Save([FromForm] TabloideRequest form)
+		public async Task<IActionResult> SaveAsync([FromForm] TabloideRequest form)
 		{
-			await _service.ConvertPDFAsync(form);
+			await _service.CreateAsync(form);
+			return Ok();
+		}
+
+		[HttpGet("{id}")]
+		public async Task<IActionResult> GetAsync(Guid id)
+		{
 			return Ok();
 		}
 	}

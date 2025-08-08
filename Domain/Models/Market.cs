@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Models
+﻿namespace Domain.Models
 {
 	public sealed class Market
 	{
@@ -12,6 +6,16 @@ namespace Domain.Models
 		public string Name { get; private set; } = null!;
 		private List<Tabloid> _tabloids = new();
 		public IReadOnlyCollection<Tabloid> Tabloids => _tabloids.AsReadOnly();
+
+		private Market(string name)
+		{
+			Name = name;
+		}
+
+		public static Market Create(string name)
+		{
+			return new Market(name);
+		}
 
 	}
 }

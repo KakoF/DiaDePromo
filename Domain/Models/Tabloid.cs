@@ -16,8 +16,10 @@
 			_market = market;
 		}
 
-		public static Tabloid Create(Guid id, string name, Market market)
+		public static Tabloid Create(string name, Market market)
 		{
+			var id = Guid.NewGuid();
+			name = $"{id}_{name}";
 			return new Tabloid(id, name, market);
 		}
 
