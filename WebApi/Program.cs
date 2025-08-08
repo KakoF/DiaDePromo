@@ -1,5 +1,6 @@
 using WebApi.Extensions.AppExtensions;
 using WebApi.Extensions.BuilderExtensions;
+using WebApi.Extensions.HostExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

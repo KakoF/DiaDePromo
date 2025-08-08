@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace WebApi.Extensions.BuilderExtensions
+namespace WebApi.Extensions.HostExtensions
 {
 	public static class LoggerExtensions
 	{
