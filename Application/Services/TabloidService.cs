@@ -11,10 +11,9 @@ namespace Application.Services
 		{
 			_storage = storage;
 		}
-		public Task ConvertPDFAsync(TabloideRequest request)
+		public async Task ConvertPDFAsync(TabloideRequest request)
 		{
-			_storage.StoragePDFAsync(request.Tabloide);
-			throw new NotImplementedException();
+			await _storage.StoragePDFAsync(request.Tabloide.OpenReadStream(), request.Tabloide.FileName);
 		}
 	}
 }
