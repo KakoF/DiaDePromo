@@ -7,6 +7,8 @@ builder.Services.AddControllers();
 builder.Services.AddSwagger();
 builder.Services.AddInternalDependencies();
 
+builder.Host.AddLogger();
+
 var app = builder.Build();
 
 app.AddSwagger();
