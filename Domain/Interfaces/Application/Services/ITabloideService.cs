@@ -1,7 +1,7 @@
 ﻿using Domain.Records.Requests;
 using Domain.Records.Responses;
 
-namespace Domain.Interfaces.Services
+namespace Domain.Interfaces.Application.Services
 {
     public interface ITabloideService
     {

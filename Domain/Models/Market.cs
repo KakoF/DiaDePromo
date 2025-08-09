@@ -17,5 +17,10 @@
 			return new Market(name);
 		}
 
+		public void AddTabloid(Tabloid tabloid)
+		{
+			_tabloids.Add(tabloid);
+		}
+
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using Application.Services;
+using Domain.Interfaces.Application.Services;
 using Domain.Interfaces.Infrastructure;
-using Domain.Interfaces.Services;
 using Infrastructure.Storage;
 
 namespace WebApi.Extensions.BuilderExtensions

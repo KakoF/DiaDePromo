@@ -1,4 +1,4 @@
-using Domain.Interfaces.Services;
+using Domain.Interfaces.Application.Services;
 using Domain.Records.Requests;
 using Microsoft.AspNetCore.Mvc;
 
