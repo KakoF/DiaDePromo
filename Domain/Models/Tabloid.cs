@@ -1,4 +1,7 @@
-﻿namespace Domain.Models
+﻿using Domain.Enums;
+using Domain.Exceptions;
+
+namespace Domain.Models
 {
 	public sealed class Tabloid
 	{
@@ -15,6 +18,9 @@
 
 		public static Tabloid Create(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				throw new DomainException("Tabloid name must have value");
+
 			var id = Guid.NewGuid();
 			name = $"{id}_{name}";
 			return new Tabloid(id, name);

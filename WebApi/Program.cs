@@ -1,6 +1,7 @@
 using WebApi.Extensions.AppExtensions;
 using WebApi.Extensions.BuilderExtensions;
 using WebApi.Extensions.HostExtensions;
+using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,5 +20,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();

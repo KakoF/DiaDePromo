@@ -1,4 +1,7 @@
-﻿namespace Domain.Models
+﻿using Domain.Enums;
+using Domain.Exceptions;
+
+namespace Domain.Models
 {
 	public sealed class Market
 	{
@@ -14,6 +17,9 @@
 
 		public static Market Create(string name)
 		{
+			if (string.IsNullOrEmpty(name))
+				throw new DomainException("Market name must have value");
+
 			return new Market(name);
 		}
 

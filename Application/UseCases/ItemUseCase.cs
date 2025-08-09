@@ -3,7 +3,7 @@ using Domain.Models;
 
 namespace Application.UseCases
 {
-	internal class ItemUseCase : IItemUseCase
+	public class ItemUseCase : IItemUseCase
 	{
 		public Task<IEnumerable<Item>> ExtractItemsAsync(Stream file)
 		{

@@ -23,13 +23,11 @@ namespace Application.Services
 			var tabloid = Tabloid.Create(request.MarketName);
 			var market = Market.Create(request.MarketName);
 			var items = await _itemUseCase.ExtractItemsAsync(request.Tabloide.OpenReadStream());
-
 			
 			foreach (var item in items)
 				tabloid.Add(item);
 			
 			market.AddTabloid(tabloid);
-
 
 			await _marketUseCase.PersistMarketAsync(market);
 			

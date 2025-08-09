@@ -3,7 +3,7 @@ using Domain.Models;
 
 namespace Application.UseCases
 {
-	internal class MarkeUseCase : IMarkeUseCase
+	public class MarkeUseCase : IMarkeUseCase
 	{
 		public Task PersistMarketAsync(Market market)
 		{
