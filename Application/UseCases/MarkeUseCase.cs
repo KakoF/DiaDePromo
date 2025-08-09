@@ -7,7 +7,7 @@ namespace Application.UseCases
 	{
 		public Task PersistMarketAsync(Market market)
 		{
-			throw new NotImplementedException();
+			return Task.FromResult("OK");
 		}
 	}
 }

@@ -2,7 +2,7 @@
 using Domain.Interfaces.Application.UseCases;
 using Domain.Interfaces.Infrastructure;
 using Domain.Models;
-using Domain.Records.Requests;
+using Domain.Records.Requests.Tabloid;
 using Domain.Records.Responses;
 
 namespace Application.Services
@@ -18,9 +18,9 @@ namespace Application.Services
 			_marketUseCase = marketUseCase;
 			_itemUseCase = itemUseCase;
 		}
-		public async Task<TabloidCreateResponse> CreateAsync(TabloideRequest request)
+		public async Task<TabloidCreateResponse> CreateAsync(TabloidFileRequest request)
 		{
-			var tabloid = Tabloid.Create(request.MarketName);
+			var tabloid = Tabloid.Create(request.MarketName, true);
 			var market = Market.Create(request.MarketName);
 			var items = await _itemUseCase.ExtractItemsAsync(request.Tabloide.OpenReadStream());
 			
@@ -32,6 +32,21 @@ namespace Application.Services
 			await _marketUseCase.PersistMarketAsync(market);
 			
 			await _storage.StoragePDFAsync(request.Tabloide.OpenReadStream(), request.Tabloide.FileName);
+
+			return new TabloidCreateResponse(tabloid.Id, market.Name);
+		}
+
+		public async Task<TabloidCreateResponse> CreateAsync(TabloidJsonRequest request)
+		{
+			var tabloid = Tabloid.Create(request.MarketName, false);
+			var market = Market.Create(request.MarketName);
+
+			foreach (var item in request.Items)
+				tabloid.Add(Item.Create(item.Name, item.Description, item.Type, item.Price, item.ExpirationDate));
+
+			market.AddTabloid(tabloid);
+
+			await _marketUseCase.PersistMarketAsync(market);
 
 			return new TabloidCreateResponse(tabloid.Id, market.Name);
 		}

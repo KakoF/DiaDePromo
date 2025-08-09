@@ -1,11 +1,18 @@
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using WebApi.Extensions.AppExtensions;
 using WebApi.Extensions.BuilderExtensions;
 using WebApi.Extensions.HostExtensions;
+using WebApi.Helpers;
 using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore)
+  .AddJsonOptions(opt =>
+  {
+	  opt.JsonSerializerOptions.Converters.Add(new OptOutJsonConverterFactory(new JsonStringEnumConverter()));
+  });
 builder.Services.AddSwagger();
 builder.Services.AddInternalDependencies();
 

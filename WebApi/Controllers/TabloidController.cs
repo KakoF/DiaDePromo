@@ -1,5 +1,6 @@
 using Domain.Interfaces.Application.Services;
-using Domain.Records.Requests;
+using Domain.Records.Requests.Tabloid;
+using Domain.Records.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -14,11 +15,16 @@ namespace WebApi.Controllers
 			_service = service;
 		}
 
-		[HttpPost]
-		public async Task<IActionResult> SaveAsync([FromForm] TabloideRequest form)
+		[HttpPost("File")]
+		public async Task<TabloidCreateResponse> SaveFileAsync([FromForm] TabloidFileRequest form)
 		{
-			await _service.CreateAsync(form);
-			return Ok();
+			return await _service.CreateAsync(form);
+		}
+
+		[HttpPost("Body")]
+		public async Task<TabloidCreateResponse> SaveAsync([FromBody] TabloidJsonRequest body)
+		{
+			return await _service.CreateAsync(body);
 		}
 
 		[HttpGet("{id}")]
