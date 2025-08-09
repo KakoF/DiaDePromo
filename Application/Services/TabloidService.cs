@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.Application.Services;
 using Domain.Interfaces.Application.UseCases;
 using Domain.Interfaces.Infrastructure;
+using Domain.Interfaces.Infrastructure.Extrator;
 using Domain.Models;
 using Domain.Records.Requests.Tabloid;
 using Domain.Records.Responses;
@@ -11,18 +12,18 @@ namespace Application.Services
 	{
 		public readonly IStorage _storage;
 		public readonly IMarkeUseCase _marketUseCase;
-		public readonly IItemUseCase _itemUseCase;
-		public TabloidService(IStorage storage, IMarkeUseCase marketUseCase, IItemUseCase itemUseCase)
+		public readonly IItensExtrator _extrator;
+		public TabloidService(IStorage storage, IMarkeUseCase marketUseCase, IItensExtrator extrator)
 		{
 			_storage = storage;
 			_marketUseCase = marketUseCase;
-			_itemUseCase = itemUseCase;
+			_extrator = extrator;
 		}
 		public async Task<TabloidCreateResponse> CreateAsync(TabloidFileRequest request)
 		{
 			var tabloid = Tabloid.Create(request.MarketName, true);
 			var market = Market.Create(request.MarketName);
-			var items = await _itemUseCase.ExtractItemsAsync(request.Tabloide.OpenReadStream());
+			var items = await _extrator.ExtractItensInTabloidAsync(request.Tabloide.OpenReadStream());
 			
 			foreach (var item in items)
 				tabloid.Add(item);
