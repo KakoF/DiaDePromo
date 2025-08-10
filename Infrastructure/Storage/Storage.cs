@@ -11,8 +11,11 @@ namespace Infrastructure.Storage
 			Directory.CreateDirectory(FOLDER);
 		}
 
-		public async Task StoragePDFAsync(Stream file, string name)
+		public async Task StoragePDFAsync(Stream? file, string name)
 		{
+			if (file == null)
+				return;
+
 			string caminhoCompleto = Path.Combine(FOLDER, name);
 
 			using (var fileStream = new FileStream(caminhoCompleto, FileMode.Create))

@@ -3,8 +3,8 @@ using Application.UseCases;
 using Domain.Interfaces.Application.Services;
 using Domain.Interfaces.Application.UseCases;
 using Domain.Interfaces.Infrastructure;
-using Domain.Interfaces.Infrastructure.Extrator;
-using Infrastructure.Extrator;
+using Domain.Interfaces.Infrastructure.Repositories;
+using Infrastructure.Repositories;
 using Infrastructure.Storage;
 
 namespace WebApi.Extensions.BuilderExtensions
@@ -16,7 +16,8 @@ namespace WebApi.Extensions.BuilderExtensions
 			services.AddScoped<IMarkeUseCase, MarkeUseCase>();
 			services.AddScoped<ITabloideService, TabloidService>();
 			services.AddScoped<IStorage, Storage>();
-			services.AddScoped<IItensExtrator, ItensExtrator>();
+			services.AddScoped<ICityUseCase, CityUseCase>();
+			services.AddScoped<ICityRepository, CityRepository>();
 		}
 	}
 }

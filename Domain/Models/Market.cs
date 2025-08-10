@@ -27,6 +27,5 @@ namespace Domain.Models
 		{
 			_tabloids.Add(tabloid);
 		}
-
 	}
 }

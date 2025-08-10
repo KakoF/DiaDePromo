@@ -15,14 +15,10 @@ namespace WebApi.Controllers
 			_service = service;
 		}
 
-		[HttpPost("File")]
-		public async Task<TabloidCreateResponse> SaveFileAsync([FromForm] TabloidFileRequest form)
-		{
-			return await _service.CreateAsync(form);
-		}
 
-		[HttpPost("Body")]
-		public async Task<TabloidCreateResponse> SaveAsync([FromBody] TabloidJsonRequest body)
+		[HttpPost]
+		[Consumes("multipart/form-data")]
+		public async Task<TabloidCreateResponse> SaveAsync([FromForm] TabloidRequest body)
 		{
 			return await _service.CreateAsync(body);
 		}

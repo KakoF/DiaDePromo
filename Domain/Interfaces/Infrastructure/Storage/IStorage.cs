@@ -2,6 +2,6 @@
 {
 	public interface IStorage
 	{
-		public Task StoragePDFAsync(Stream file, string name);
+		Task StoragePDFAsync(Stream? file, string name);
 	}
 }

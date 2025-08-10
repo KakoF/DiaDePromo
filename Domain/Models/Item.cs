@@ -10,10 +10,10 @@ namespace Domain.Models
 		public string? Description { get; private set; }
 		public EItemType Type { get; private set; }
 		public decimal Price { get; private set; }
-		public DateTime? ExpirationDate { get; private set; }
+		public DateTime ExpirationDate { get; private set; }
 
 
-		private Item(string name, string? description, EItemType type, decimal price, DateTime? expirationDate)
+		private Item(string name, string? description, EItemType type, decimal price, DateTime expirationDate)
 		{
 			Name = name;
 			Description = description;
@@ -22,13 +22,16 @@ namespace Domain.Models
 			ExpirationDate = expirationDate;
 		}
 
-		public static Item Create(string name, string? description, EItemType type, decimal price, DateTime? expirationDate)
+		public static Item Create(string name, string? description, EItemType type, decimal price, DateTime expirationDate)
 		{
 			if (string.IsNullOrEmpty(name))
 				throw new DomainException("Item name must have value");
 
 			if (!Enum.IsDefined(typeof(EItemType), type))
-				throw new DomainException("Type is not valid.");
+				throw new DomainException("Item type is not valid.");
+
+			if (expirationDate.Date < DateTime.Now.Date)
+				throw new DomainException("Item expiration date must have biggest then current date");
 
 			return new Item(name, description, type, price, expirationDate);
 		}

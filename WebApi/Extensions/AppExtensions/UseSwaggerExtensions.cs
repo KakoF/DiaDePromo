@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Extensions.AppExtensions
 {
-	public static class UseSwagger
+	public static class UseSwaggerExtensions
 	{
 		public static void AddSwagger(this WebApplication app)
 		{

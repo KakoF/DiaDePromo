@@ -1,10 +1,10 @@
 ﻿using Domain.Interfaces.Application.Services;
 using Domain.Interfaces.Application.UseCases;
 using Domain.Interfaces.Infrastructure;
-using Domain.Interfaces.Infrastructure.Extrator;
 using Domain.Models;
 using Domain.Records.Requests.Tabloid;
 using Domain.Records.Responses;
+using Infrastructure.Storage;
 
 namespace Application.Services
 {
@@ -12,40 +12,28 @@ namespace Application.Services
 	{
 		public readonly IStorage _storage;
 		public readonly IMarkeUseCase _marketUseCase;
-		public readonly IItensExtrator _extrator;
-		public TabloidService(IStorage storage, IMarkeUseCase marketUseCase, IItensExtrator extrator)
+		public readonly ICityUseCase _cityUseCase;
+		public TabloidService(IStorage storage, IMarkeUseCase marketUseCase, ICityUseCase cityUseCase)
 		{
 			_storage = storage;
 			_marketUseCase = marketUseCase;
-			_extrator = extrator;
-		}
-		public async Task<TabloidCreateResponse> CreateAsync(TabloidFileRequest request)
-		{
-			var tabloid = Tabloid.Create(request.MarketName, true);
-			var market = Market.Create(request.MarketName);
-			var items = await _extrator.ExtractItensInTabloidAsync(request.Tabloide.OpenReadStream());
-			
-			foreach (var item in items)
-				tabloid.Add(item);
-			
-			market.AddTabloid(tabloid);
-
-			await _marketUseCase.PersistMarketAsync(market);
-			
-			await _storage.StoragePDFAsync(request.Tabloide.OpenReadStream(), request.Tabloide.FileName);
-
-			return new TabloidCreateResponse(tabloid.Id, market.Name);
+			_cityUseCase = cityUseCase;
 		}
 
-		public async Task<TabloidCreateResponse> CreateAsync(TabloidJsonRequest request)
+		public async Task<TabloidCreateResponse> CreateAsync(TabloidRequest request)
 		{
-			var tabloid = Tabloid.Create(request.MarketName, false);
+			var city = await _cityUseCase.GetAsync(request.CityId);
+			var tabloid = Tabloid.Create(request.MarketName, (request.Tabloide != null ? true : false), city.Name, request.ExpirationDate);
 			var market = Market.Create(request.MarketName);
 
 			foreach (var item in request.Items)
-				tabloid.Add(Item.Create(item.Name, item.Description, item.Type, item.Price, item.ExpirationDate));
+				tabloid.Add(Item.Create(item.Name, item.Description, item.Type, item.Price, item.ExpirationDate ?? request.ExpirationDate));
 
 			market.AddTabloid(tabloid);
+
+			tabloid.hasItems();
+
+			await _storage.StoragePDFAsync(request?.Tabloide?.OpenReadStream(), tabloid.Name);
 
 			await _marketUseCase.PersistMarketAsync(market);
 
