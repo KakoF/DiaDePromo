@@ -4,7 +4,6 @@ using Domain.Interfaces.Infrastructure;
 using Domain.Models;
 using Domain.Records.Requests.Tabloid;
 using Domain.Records.Responses;
-using Infrastructure.Storage;
 
 namespace Application.Services
 {

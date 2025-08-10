@@ -21,8 +21,9 @@ namespace WebApi.Extensions.HostExtensions
 			.MinimumLevel.Information()
 			.Enrich.FromLogContext()
 			.WriteTo.Elasticsearch(new[] { new Uri(configuration["ElasticConfiguration:Uri"]!) }, opts => {
-				opts.DataStream = new DataStreamName("logs", $"{Assembly.GetExecutingAssembly().GetName().Name!.ToLower().Replace(".", "-")}-{environment!.ToLower()}", $"{DateTime.UtcNow:yyyy-MM}");
+				opts.DataStream = new DataStreamName("logs", $"{"DiaDePromo".ToLower().Replace(".", "-")}-{environment!.ToLower()}", $"{DateTime.UtcNow:yyyy-MM}");
 			})
+			.Enrich.WithProperty("service.name", "DiaDePromo")
 			.Enrich.WithProperty("Environment", environment)
 			.Enrich.WithProperty("HostName", System.Net.Dns.GetHostName())
 			.ReadFrom.Configuration(configuration: configuration)
