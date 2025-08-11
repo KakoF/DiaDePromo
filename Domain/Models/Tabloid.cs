@@ -1,6 +1,4 @@
-﻿using Domain.Enums;
-using Domain.Exceptions;
-using System.Formats.Tar;
+﻿using Domain.Exceptions;
 
 namespace Domain.Models
 {
@@ -46,7 +44,7 @@ namespace Domain.Models
 			_items.Add(item);
 		}
 
-		public void hasItems()
+		public void ValidateItems()
 		{
 			if (!_items.Any())
 				throw new DomainException("Tabloid has no items");

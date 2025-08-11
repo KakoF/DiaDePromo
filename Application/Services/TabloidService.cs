@@ -30,7 +30,7 @@ namespace Application.Services
 
 			market.AddTabloid(tabloid);
 
-			tabloid.hasItems();
+			tabloid.ValidateItems();
 
 			await _storage.StoragePDFAsync(request?.Tabloide?.OpenReadStream(), tabloid.Name);
 
