@@ -20,23 +20,6 @@ namespace Infrastructure.Repositories
 			return await _repository.FindOneAsync((x => x.Name == marketName && x.City.FirstOrDefault().Name == cityName));
 		}
 
-		public async Task AddTabloidAsync(string marketName, string cityName, TabloidDocument tabloid)
-		{
-			var filter = Builders<Document>.Filter.And(
-				Builders<Document>.Filter.Eq(d => d.Name, marketName),
-				Builders<Document>.Filter.ElemMatch(d => d.City,
-					Builders<CityDocument>.Filter.And(
-						Builders<CityDocument>.Filter.Eq(c => c.Name, cityName)
-					)
-				)
-			);
-
-			var update = Builders<Document>.Update.Push("city.$.tabloid", tabloid);
-
-			await _repository.UpdateOneAsync(filter, update);
-
-		}
-
 		public async Task AddOrUpdateMarketAsync(Document document)
 		{
 			Expression<Func<Document, bool>> filterExpression = d =>
