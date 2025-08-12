@@ -1,4 +1,4 @@
-﻿namespace Domain.Interfaces.Infrastructure
+﻿namespace Infrastructure.Interfaces.Storage
 {
 	public interface IStorage
 	{

@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
-using Domain.Interfaces.Application.UseCases;
-using Domain.Interfaces.Infrastructure.Repositories;
+﻿using Domain.Interfaces.Application.UseCases;
+using Domain.Models;
+using Infrastructure.Interfaces.Repositories;
 namespace Application.UseCases
 {
 	public class CityUseCase : ICityUseCase
@@ -12,13 +12,14 @@ namespace Application.UseCases
 		}
 		public async Task<IEnumerable<City>> GetAsync()
 		{
-			var cities = await _cityRepository.GetAsync();
-			return cities.Where(x => x.Active == true);
+			var entity = await _cityRepository.GetAsync();
+			return entity.Where(x => x.Active == true).Select(x => new City() { Id = x.Id, Name = x.Name, Active = x.Active});
 		}
 
 		public async Task<City> GetAsync(long id)
 		{
-			return await _cityRepository.GetAsync(id);
+			var entity = await _cityRepository.GetAsync(id);
+			return new City() { Id = entity.Id, Name = entity.Name, Active = entity.Active };
 		}
 	}
 }

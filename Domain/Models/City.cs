@@ -1,4 +1,5 @@
-﻿namespace Domain.Entities
+﻿
+namespace Domain.Models
 {
 	public class City
 	{

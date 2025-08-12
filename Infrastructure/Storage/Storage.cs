@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces.Infrastructure;
+﻿using Infrastructure.Interfaces.Storage;
 using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.Storage

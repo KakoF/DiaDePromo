@@ -1,9 +1,9 @@
 ﻿using Domain.Interfaces.Application.Services;
 using Domain.Interfaces.Application.UseCases;
-using Domain.Interfaces.Infrastructure;
 using Domain.Models;
 using Domain.Records.Requests.Tabloid;
 using Domain.Records.Responses;
+using Infrastructure.Interfaces.Storage;
 
 namespace Application.Services
 {

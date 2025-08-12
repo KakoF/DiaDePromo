@@ -16,6 +16,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => options.Serialize
 builder.Services.AddSwagger();
 builder.Services.AddInternalDependencies();
 
+builder.AddMongoConfiguration();
 builder.Host.AddLogger();
 
 var app = builder.Build();

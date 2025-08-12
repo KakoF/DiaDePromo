@@ -1,13 +1,21 @@
 ﻿using Domain.Interfaces.Application.UseCases;
 using Domain.Models;
+using Infrastructure.Entities.Documents;
+using Infrastructure.Interfaces.Repositories;
 
 namespace Application.UseCases
 {
 	public class MarkeUseCase : IMarkeUseCase
 	{
-		public Task PersistMarketAsync(Market market)
+		private readonly IMarketRepository<MarketDocument> _marketRepository;
+		public MarkeUseCase(IMarketRepository<MarketDocument> marketRepository)
 		{
-			return Task.FromResult("OK");
+			_marketRepository = marketRepository;
+		}
+		public async Task<Market> PersistMarketAsync(Market market)
+		{
+			await _marketRepository.SaveAsync(new MarketDocument(market));
+			return market;
 		}
 	}
 }

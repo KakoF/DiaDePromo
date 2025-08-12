@@ -2,8 +2,10 @@
 using Application.UseCases;
 using Domain.Interfaces.Application.Services;
 using Domain.Interfaces.Application.UseCases;
-using Domain.Interfaces.Infrastructure;
-using Domain.Interfaces.Infrastructure.Repositories;
+using Infrastructure.Context;
+using Infrastructure.Entities.Documents;
+using Infrastructure.Interfaces.Repositories;
+using Infrastructure.Interfaces.Storage;
 using Infrastructure.Repositories;
 using Infrastructure.Storage;
 
@@ -18,6 +20,8 @@ namespace WebApi.Extensions.BuilderExtensions
 			services.AddScoped<IStorage, Storage>();
 			services.AddScoped<ICityUseCase, CityUseCase>();
 			services.AddScoped<ICityRepository, CityRepository>();
+			services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+			services.AddScoped<IMarketRepository<MarketDocument>, MarketRepository<MarketDocument>>();
 		}
 	}
 }
