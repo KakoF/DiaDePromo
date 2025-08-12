@@ -14,8 +14,15 @@ namespace Application.UseCases
 		}
 		public async Task<Market> PersistMarketAsync(Market market)
 		{
-			await _marketRepository.SaveAsync(new MarketDocument(market));
+			var entity = await _marketRepository.GetAsync(market.Name, market.Tabloids.FirstOrDefault().CityName);
+			if(entity == null)
+			{
+				await _marketRepository.SaveAsync(new MarketDocument(market));
+				return market;
+			}
+			await _marketRepository.AddTabloidAsync(market.Name, market.Tabloids.FirstOrDefault().CityName, new TabloidDocument(market.Tabloids.FirstOrDefault()));
 			return market;
+
 		}
 	}
 }

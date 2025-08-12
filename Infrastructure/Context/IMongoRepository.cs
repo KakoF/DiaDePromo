@@ -15,7 +15,7 @@ namespace Infrastructure.Context
 
 		Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression, SortDefinition<TDocument> sorterExpression = null);
 
-		Task<TDocument> FindByIdAsync(string id);
+		Task<TDocument> FindByIdAsync(Guid id);
 
 		Task InsertOneAsync(TDocument document);
 
@@ -25,7 +25,9 @@ namespace Infrastructure.Context
 
 		Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression);
 
-		Task DeleteByIdAsync(string id);
+		Task DeleteByIdAsync(Guid id);
 		Task DeleteManyAsync(Expression<Func<TDocument, bool>> filterExpression);
+
+		Task UpdateOneAsync(FilterDefinition<TDocument> filter, UpdateDefinition<TDocument> updateDefinition);
 	}
 }

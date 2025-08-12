@@ -8,7 +8,7 @@ namespace Infrastructure.Entities.Documents
 	{
 		[BsonId]
 		[BsonRepresentation(BsonType.String)]
-		public ObjectId Id { get; set; }
+		public Guid Id { get; set; }
 
 	}
 }

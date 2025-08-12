@@ -10,8 +10,9 @@ namespace Domain.Models
 		private List<Tabloid> _tabloids = new();
 		public IReadOnlyCollection<Tabloid> Tabloids => _tabloids.AsReadOnly();
 
-		private Market(string name)
+		private Market(Guid id, string name)
 		{
+			Id = id;
 			Name = name;
 		}
 
@@ -20,7 +21,7 @@ namespace Domain.Models
 			if (string.IsNullOrEmpty(name))
 				throw new DomainException("Market name must have value");
 
-			return new Market(name);
+			return new Market(Guid.NewGuid(), name);
 		}
 
 		public void AddTabloid(Tabloid tabloid)

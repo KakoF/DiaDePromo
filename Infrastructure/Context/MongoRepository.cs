@@ -1,4 +1,5 @@
-﻿using Infrastructure.Config;
+﻿using Domain.Models;
+using Infrastructure.Config;
 using Infrastructure.Entities.Documents;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -30,6 +31,7 @@ namespace Infrastructure.Context
 			return await _collection.AsQueryable().ToListAsync();
 		}
 
+		
 		public virtual async Task<IEnumerable<TDocument>> FindAllAsync(Expression<Func<TDocument, bool>> filterExpression, SortDefinition<TDocument> sorterExpression = null, int? limit = 1)
 		{
 			if (sorterExpression == null)
@@ -51,10 +53,10 @@ namespace Infrastructure.Context
 
 
 
-		public virtual async Task<TDocument> FindByIdAsync(string id)
+		public virtual async Task<TDocument> FindByIdAsync(Guid id)
 		{
-			var objectId = new ObjectId(id);
-			var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
+			//var objectId = new ObjectId(id);
+			var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, id);
 			return await _collection.Find(filter).SingleOrDefaultAsync();
 		}
 
@@ -75,18 +77,22 @@ namespace Infrastructure.Context
 			await _collection.FindOneAndReplaceAsync(filter, document);
 		}
 
+		public virtual async Task UpdateOneAsync(FilterDefinition<TDocument> filter, UpdateDefinition<TDocument> updateDefinition)
+		{
+			await _collection.UpdateOneAsync(filter, updateDefinition);
+		}
+
 		public async Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression)
 		{
 			await _collection.FindOneAndDeleteAsync(filterExpression);
 		}
 
-		public async Task DeleteByIdAsync(string id)
+		public async Task DeleteByIdAsync(Guid id)
 		{
-			var objectId = new ObjectId(id);
-			var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
+			//var objectId = new ObjectId(id);
+			var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, id);
 			await _collection.FindOneAndDeleteAsync(filter);
 		}
-
 
 		public async Task DeleteManyAsync(Expression<Func<TDocument, bool>> filterExpression)
 		{

@@ -4,16 +4,25 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Infrastructure.Entities.Documents
 {
-	public class TabloidDocument
+	[BsonCollection("Tabloid")]
+	[BsonIgnoreExtraElements]
+	public class TabloidDocument: BaseDocument
 	{
-		public TabloidDocument(Market market)
+		public TabloidDocument()
 		{
-			Name = market.Name;
+			
+		}
+		
+		public TabloidDocument(Tabloid tabloid)
+		{
+			Id = tabloid.Id;
+			Name = tabloid.Name;
 		}
 
 		[BsonRequired()]
 		[BsonElement("name")]
-		public string Name { get; }
+		public string Name { get; set; }
+
 		
 	}
 }
