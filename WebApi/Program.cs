@@ -14,6 +14,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => options.Serialize
 	  opt.JsonSerializerOptions.Converters.Add(new OptOutJsonConverterFactory(new JsonStringEnumConverter()));
   });
 builder.Services.AddSwagger();
+builder.Services.AddHealthChecks();
 builder.Services.AddInternalDependencies();
 
 builder.AddMongoConfiguration();
@@ -24,7 +25,7 @@ var app = builder.Build();
 app.AddSwagger();
 
 app.UseHttpsRedirection();
-
+app.UsePrometheus();
 app.UseAuthorization();
 
 app.MapControllers();
