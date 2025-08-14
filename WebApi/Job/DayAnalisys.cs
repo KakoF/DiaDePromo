@@ -1,10 +1,17 @@
-﻿namespace WebApi.Job
+﻿using Domain.Interfaces.Application.Services;
+
+namespace WebApi.Job
 {
 	public class DayAnalisys
 	{
-		public void ExecuteAsync()
+		private readonly IPromoDayService _promoDayService;
+		public DayAnalisys(IPromoDayService promoDayService)
 		{
-			Console.WriteLine("Executando job às 10h!");
+			_promoDayService = promoDayService;
+		}
+		public async Task ExecuteAsync()
+		{
+			await _promoDayService.OrganizePromoDayAsync();
 		}
 	}
 }

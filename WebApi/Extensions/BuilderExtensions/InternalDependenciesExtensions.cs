@@ -15,6 +15,7 @@ namespace WebApi.Extensions.BuilderExtensions
 	{
 		public static void AddInternalDependencies(this IServiceCollection services)
 		{
+			services.AddScoped<IPromoDayService, PromoDayService>();
 			services.AddScoped<IMarkeUseCase, MarkeUseCase>();
 			services.AddScoped<ITabloideService, TabloidService>();
 			services.AddScoped<IStorage, Storage>();
