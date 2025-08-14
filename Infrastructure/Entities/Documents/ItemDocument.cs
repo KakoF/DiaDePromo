@@ -1,6 +1,7 @@
 ﻿
 using Domain.Enums;
 using Domain.Models;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Infrastructure.Entities.Documents
@@ -33,6 +34,7 @@ namespace Infrastructure.Entities.Documents
 		public string? Description { get; set; }
 
 		[BsonRequired()]
+		[BsonRepresentation(BsonType.String)]
 		[BsonElement("type")]
 		public EItemType Type { get; set; }
 
