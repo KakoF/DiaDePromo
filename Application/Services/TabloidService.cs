@@ -22,7 +22,7 @@ namespace Application.Services
 		public async Task<TabloidCreateResponse> CreateAsync(TabloidRequest request)
 		{
 			var city = await _cityUseCase.GetAsync(request.CityId);
-			var tabloid = Tabloid.Create(request.MarketName, (request.Tabloide != null ? true : false), city.Name, request.ExpirationDate);
+			var tabloid = Tabloid.Create(request.TabloidName, (request.Tabloids?.Any() ?? false), (request.Tabloids?.Count() ?? 0), city.Name, request.ExpirationDate);
 			var market = Market.Create(request.MarketName);
 
 			foreach (var item in request.Items)
@@ -32,7 +32,7 @@ namespace Application.Services
 
 			tabloid.ValidateItems();
 
-			await _storage.StoragePDFAsync(request?.Tabloide?.OpenReadStream(), tabloid.Name);
+			await _storage.StoragePDFAsync(request.Tabloids, tabloid.Id, tabloid.Name);
 
 			await _marketUseCase.PersistMarketAsync(market);
 

@@ -18,6 +18,7 @@ namespace Infrastructure.Entities.Documents
 				Item.Add(new ItemDocument(item));
 			}
 			HasFile = tabloid.HasFile;
+			NumberFilePages = tabloid.NumberFilePages;
 			ExpirationDate = tabloid.ExpirationDate;
 		}
 
@@ -30,6 +31,9 @@ namespace Infrastructure.Entities.Documents
 		[BsonRequired()]
 		[BsonElement("hasFile")]
 		public bool HasFile { get; private set; }
+		[BsonRequired()]
+		[BsonElement("numberFilePages")]
+		public int NumberFilePages { get; private set; }
 		[BsonRequired()]
 		[BsonElement("expirationDate")]
 		public DateTime ExpirationDate { get; private set; }

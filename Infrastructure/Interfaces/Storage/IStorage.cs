@@ -1,7 +1,9 @@
-﻿namespace Infrastructure.Interfaces.Storage
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Infrastructure.Interfaces.Storage
 {
 	public interface IStorage
 	{
-		Task StoragePDFAsync(Stream? file, string name);
+		Task StoragePDFAsync(IEnumerable<IFormFile>? files, Guid id, string name);
 	}
 }

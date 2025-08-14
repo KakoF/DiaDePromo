@@ -11,7 +11,7 @@ namespace Infrastructure.Storage
 			Directory.CreateDirectory(FOLDER);
 		}
 
-		public async Task StoragePDFAsync(Stream? file, string name)
+		private async Task StoragePDFAsync(Stream? file, string name)
 		{
 			if (file == null)
 				return;
@@ -24,9 +24,16 @@ namespace Infrastructure.Storage
 			}
 		}
 
-		public void StoragePDFAsync(IFormFile file)
+		public async Task StoragePDFAsync(IEnumerable<IFormFile>? files, Guid id, string name)
 		{
-			throw new NotImplementedException();
+			if (files != null && files.Any())
+			{
+				foreach (var item in files.Select((file, index) => new { file, index }))
+				{
+					var newName = $"{id}_{name}_{item.index}.pdf";
+					await StoragePDFAsync(item.file.OpenReadStream(), newName);
+				}
+			}
 		}
 	}
 }
