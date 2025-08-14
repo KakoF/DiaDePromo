@@ -12,13 +12,16 @@ namespace Infrastructure.Entities.Documents
 		{
 			
 		}
-		
-		public CityDocument(Tabloid tabloid)
+		public CityDocument(string cityName, IReadOnlyCollection<Tabloid> tabloids)
 		{
-			Name = tabloid!.CityName;
-			Tabloid.Add(new TabloidDocument(tabloid!));
-		}
 
+			Name = cityName;
+			foreach (var tabloid in tabloids)
+			{
+				Tabloid.Add(new TabloidDocument(tabloid, tabloid.Items.ToList()));
+			}
+		}
+		
 		[BsonRequired()]
 		[BsonElement("name")]
 		public string Name { get; set; }

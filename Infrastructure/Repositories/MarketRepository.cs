@@ -28,7 +28,7 @@ namespace Infrastructure.Repositories
 
 			var entity = await _repository.FilterByAsync(filterExpression);
 
-			if (entity != null)
+			if (entity.Any())
 			{
 				if (entity!.FirstOrDefault()!.City.Any(c => c.Name == document.City.FirstOrDefault()!.Name))
 				{
@@ -52,7 +52,8 @@ namespace Infrastructure.Repositories
 						)
 					)
 				);
-			var update = Builders<Document>.Update.Push("city.$.tabloid", document.City.FirstOrDefault()!.Tabloid);
+
+			var update = Builders<Document>.Update.PushEach("city.$.tabloid", document.City.FirstOrDefault()!.Tabloid);
 			await _repository.UpdateOneAsync(filter, update);
 		}
 

@@ -15,7 +15,7 @@ namespace Infrastructure.Entities.Documents
 		{
 			Id = market.Id;
 			Name = market.Name;
-			City.Add(new CityDocument(market.Tabloids!.FirstOrDefault()!));
+			City.Add(new CityDocument(market.Tabloids!.FirstOrDefault()!.CityName, market.Tabloids.ToList()));
 		}
 
 		[BsonRequired()]
