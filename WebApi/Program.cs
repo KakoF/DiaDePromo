@@ -34,6 +34,7 @@ app.MapControllers();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
+app.UseHangfireDashboard();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -41,8 +42,11 @@ using (var scope = app.Services.CreateScope())
 	jobManager.AddOrUpdate<DayAnalisys>(
 		"analisys-promo-day",
 		job => job.ExecuteAsync(),
-		"0 10 * * *"
-		//Cron.Minutely
+		"0 10 * * *",
+		new RecurringJobOptions
+		{
+			TimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time")
+		}
 	);
 }
 
