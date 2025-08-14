@@ -1,9 +1,11 @@
+using Hangfire;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 using WebApi.Extensions.AppExtensions;
 using WebApi.Extensions.BuilderExtensions;
 using WebApi.Extensions.HostExtensions;
 using WebApi.Helpers;
+using WebApi.Job;
 using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +18,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => options.Serialize
 builder.Services.AddSwagger();
 builder.Services.AddHealthChecks();
 builder.Services.AddInternalDependencies();
-
+builder.Services.AddHangfireJob();
 builder.AddMongoConfiguration();
 builder.Host.AddLogger();
 
@@ -31,5 +33,18 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+
+using (var scope = app.Services.CreateScope())
+{
+	var jobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+	jobManager.AddOrUpdate<DayAnalisys>(
+		"analisys-promo-day",
+		job => job.ExecuteAsync(),
+		"0 10 * * *"
+		//Cron.Minutely
+	);
+}
+
 
 app.Run();
