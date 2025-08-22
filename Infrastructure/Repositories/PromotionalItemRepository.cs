@@ -4,10 +4,10 @@ using Infrastructure.Interfaces.Repositories;
 
 namespace Infrastructure.Repositories
 {
-	public class ItemRepository<Document> : IItemRepository<Document> where Document : ItemDocument
+	public class PromotionalItemRepository<Document> : IPromotionalItemRepository<Document> where Document : PromotionalItemDocument
 	{
 		private readonly IMongoRepository<Document> _repository;
-		public ItemRepository(IMongoRepository<Document> repository)
+		public PromotionalItemRepository(IMongoRepository<Document> repository)
 		{
 			_repository = repository;
 		}

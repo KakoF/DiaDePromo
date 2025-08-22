@@ -4,8 +4,8 @@ namespace WebApi.Job
 {
 	public class RemoveExpiredItens
 	{
-		private readonly IItemUseCase _itemUseCase;
-		public RemoveExpiredItens(IItemUseCase itemUseCase)
+		private readonly IPromotionalItemUseCase _itemUseCase;
+		public RemoveExpiredItens(IPromotionalItemUseCase itemUseCase)
 		{
 			_itemUseCase = itemUseCase;
 		}

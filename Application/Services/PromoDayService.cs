@@ -5,8 +5,8 @@ namespace Application.Services
 {
 	public class PromoDayService : IPromoDayService
 	{
-		private readonly IItemUseCase _itemUseCase;
-		public PromoDayService(IItemUseCase itemUseCase)
+		private readonly IPromotionalItemUseCase _itemUseCase;
+		public PromoDayService(IPromotionalItemUseCase itemUseCase)
 		{
 			_itemUseCase = itemUseCase;
 		}
@@ -14,14 +14,14 @@ namespace Application.Services
 		public async Task OrganizePromoDayAsync()
 		{
 			var itens = await _itemUseCase.GetAsync();
-			var cheapestItems = itens.GroupBy(i => i.Name.Split(' ')[0].Trim().ToLower()).Select(g => g.OrderBy(i => i.Price).First()).ToList();
-			
-
-			//var itensMaisBaratos = itens.GroupBy(i => i.Name.ToLower()).Select(g => g.OrderBy(i => i.Price).First()).ToList();
-
-			//var itensMaisBaratos = itens.GroupBy(i => i.Name.Trim().ToLower()).Select(g => g.OrderBy(i => i.Price).First()).ToList();
-
-
+			var cheapestItems = itens
+			.GroupBy(i => i.CityName.Trim().ToLower())
+			.SelectMany(cityGroup =>
+				cityGroup
+					.GroupBy(i => i.Name.Trim().ToLower()) 
+					.Select(g => g.OrderBy(i => i.Price).First())
+			)
+			.ToList();
 
 			var test = itens;
 		}

@@ -11,9 +11,9 @@ namespace Application.Services
 	{
 		public readonly IStorage _storage;
 		public readonly IMarkeUseCase _marketUseCase;
-		public readonly IItemUseCase _itemUseCase;
+		public readonly IPromotionalItemUseCase _itemUseCase;
 		public readonly ICityUseCase _cityUseCase;
-		public TabloidService(IStorage storage, IMarkeUseCase marketUseCase, ICityUseCase cityUseCase, IItemUseCase itemUseCase	)
+		public TabloidService(IStorage storage, IMarkeUseCase marketUseCase, ICityUseCase cityUseCase, IPromotionalItemUseCase itemUseCase	)
 		{
 			_storage = storage;
 			_marketUseCase = marketUseCase;
@@ -37,7 +37,7 @@ namespace Application.Services
 			await _storage.StoragePDFAsync(request.Tabloids, tabloid.Id, tabloid.Name);
 
 			await _marketUseCase.PersistMarketAsync(market);
-			await _itemUseCase.PersistItensAsync(market.Tabloids.FirstOrDefault()!.Items);
+			await _itemUseCase.PersistPromotionalItensAsync(market.Name, market.Tabloids.FirstOrDefault()!.CityName, market.Tabloids.FirstOrDefault()!.Items);
 
 			return new TabloidCreateResponse(tabloid.Id, market.Name);
 		}
