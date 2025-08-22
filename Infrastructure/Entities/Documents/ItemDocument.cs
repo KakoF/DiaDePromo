@@ -8,7 +8,7 @@ namespace Infrastructure.Entities.Documents
 {
 	[BsonCollection("Item")]
 	[BsonIgnoreExtraElements]
-	public class ItemDocument
+	public class ItemDocument : BaseDocument
 	{
 		public ItemDocument()
 		{
@@ -17,7 +17,7 @@ namespace Infrastructure.Entities.Documents
 		
 		public ItemDocument(Item item)
 		{
-		
+			Id = item.Id;
 			Name = item.Name;
 			Description = item.Description;
 			Type = item.Type;

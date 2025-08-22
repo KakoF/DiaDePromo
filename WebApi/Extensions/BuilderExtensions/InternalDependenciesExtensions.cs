@@ -17,12 +17,14 @@ namespace WebApi.Extensions.BuilderExtensions
 		{
 			services.AddScoped<IPromoDayService, PromoDayService>();
 			services.AddScoped<IMarkeUseCase, MarkeUseCase>();
+			services.AddScoped<IItemUseCase, ItemUseCase>();
 			services.AddScoped<ITabloideService, TabloidService>();
 			services.AddScoped<IStorage, Storage>();
 			services.AddScoped<ICityUseCase, CityUseCase>();
 			services.AddScoped<ICityRepository, CityRepository>();
 			services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 			services.AddScoped<IMarketRepository<MarketDocument>, MarketRepository<MarketDocument>>();
+			services.AddScoped<IItemRepository<ItemDocument>, ItemRepository<ItemDocument>>();
 		}
 	}
 }

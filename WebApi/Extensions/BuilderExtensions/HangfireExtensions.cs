@@ -13,6 +13,7 @@ namespace WebApi.Extensions.BuilderExtensions
 			services.AddHangfireServer();
 
 			services.AddTransient<DayAnalisys>();
+			services.AddTransient<RemoveExpiredItens>();
 
 		}
 	}

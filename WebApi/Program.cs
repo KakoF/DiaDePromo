@@ -48,6 +48,16 @@ using (var scope = app.Services.CreateScope())
 			TimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time")
 		}
 	);
+
+	jobManager.AddOrUpdate<RemoveExpiredItens>(
+		"remove-expired-itens",
+		job => job.ExecuteAsync(),
+		"0 1 * * *",
+		new RecurringJobOptions
+		{
+			TimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time")
+		}
+	);
 }
 
 

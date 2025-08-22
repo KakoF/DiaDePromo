@@ -1,11 +1,11 @@
 ﻿using Domain.Enums;
 using Domain.Exceptions;
-using System.Drawing;
 
 namespace Domain.Models
 {
 	public sealed class Item
 	{
+		public Guid Id { get; private set; }
 		public string Name { get; private set; } = null!;
 		public string? Description { get; private set; }
 		public EItemType Type { get; private set; }
@@ -13,8 +13,9 @@ namespace Domain.Models
 		public DateTime ExpirationDate { get; private set; }
 
 
-		private Item(string name, string? description, EItemType type, decimal price, DateTime expirationDate)
+		private Item(Guid id, string name, string? description, EItemType type, decimal price, DateTime expirationDate)
 		{
+			Id = id;
 			Name = name;
 			Description = description;
 			Type = type;
@@ -33,7 +34,7 @@ namespace Domain.Models
 			if (expirationDate.Date < DateTime.Now.Date)
 				throw new DomainException("Item expiration date must have biggest then current date");
 
-			return new Item(name, description, type, price, expirationDate);
+			return new Item(Guid.NewGuid(), name, description, type, price, expirationDate);
 		}
 	}
 }
