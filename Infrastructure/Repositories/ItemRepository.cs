@@ -16,6 +16,11 @@ namespace Infrastructure.Repositories
 			await _repository.InsertManyAsync(documents);
 		}
 
+		public async Task<IEnumerable<Document>> GetAsync()
+		{
+			return await _repository.FindAllAsync();
+		}
+
 		public async Task RemoveItensByDateAsync(DateTime currentDate)
 		{
 			await _repository.DeleteManyAsync((x => x.ExpirationDate < currentDate));

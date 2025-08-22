@@ -18,6 +18,12 @@ namespace Application.UseCases
 			await _itemRepository.RemoveItensByDateAsync(currentDate);
 		}
 
+		public async Task<IEnumerable<Item>> GetAsync()
+		{
+			var collections = await _itemRepository.GetAsync();
+			return collections.Select(c => Item.Clone(c.Id, c.Name, c.Description, c.Type, c.Price, c.ExpirationDate));
+		}
+
 		public async Task PersistItensAsync(IEnumerable<Item> itens)
 		{
 			var documents = itens.Select(i => new ItemDocument(i)).ToList();

@@ -1,21 +1,29 @@
 ﻿using Domain.Interfaces.Application.Services;
 using Domain.Interfaces.Application.UseCases;
-using Domain.Models;
-using Domain.Records.Requests.Tabloid;
-using Domain.Records.Responses;
-using Infrastructure.Interfaces.Storage;
 
 namespace Application.Services
 {
 	public class PromoDayService : IPromoDayService
 	{
-		public PromoDayService()
+		private readonly IItemUseCase _itemUseCase;
+		public PromoDayService(IItemUseCase itemUseCase)
 		{
+			_itemUseCase = itemUseCase;
 		}
 
-		public Task OrganizePromoDayAsync()
+		public async Task OrganizePromoDayAsync()
 		{
-			throw new NotImplementedException();
+			var itens = await _itemUseCase.GetAsync();
+			var cheapestItems = itens.GroupBy(i => i.Name.Split(' ')[0].Trim().ToLower()).Select(g => g.OrderBy(i => i.Price).First()).ToList();
+			
+
+			//var itensMaisBaratos = itens.GroupBy(i => i.Name.ToLower()).Select(g => g.OrderBy(i => i.Price).First()).ToList();
+
+			//var itensMaisBaratos = itens.GroupBy(i => i.Name.Trim().ToLower()).Select(g => g.OrderBy(i => i.Price).First()).ToList();
+
+
+
+			var test = itens;
 		}
 	}
 }

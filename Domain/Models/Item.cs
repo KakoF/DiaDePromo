@@ -23,6 +23,11 @@ namespace Domain.Models
 			ExpirationDate = expirationDate;
 		}
 
+		public static Item Clone(Guid id, string name, string? description, EItemType type, decimal price, DateTime expirationDate)
+		{
+			return new Item(id, name, description, type, price, expirationDate);
+		}
+
 		public static Item Create(string name, string? description, EItemType type, decimal price, DateTime expirationDate)
 		{
 			if (string.IsNullOrEmpty(name))
